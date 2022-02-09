@@ -1,7 +1,17 @@
-package application;
-import java.io.IOException;import javafx.application.Application;import javafx.fxml.FXMLLoader;import javafx.scene.Scene;import javafx.scene.control.ScrollPane;import javafx.stage.Stage;
+package application;
 
-public class Main extends Application {		private static Scene mainScene;	
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+	
+	private static Scene mainScene;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -20,7 +30,11 @@ public class Main extends Application {		private static Scene mainScene;
 		}
 	}
 
-	public static Scene getMainScene() {		return mainScene;	}	public static void main(String[] args) {
+	public static Scene getMainScene() {
+		return mainScene;
+	}
+	
+	public static void main(String[] args) {
 		launch(args);
 	}
 }
