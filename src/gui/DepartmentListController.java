@@ -47,7 +47,8 @@ public class DepartmentListController implements Initializable{
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/DepartmentForm.fxml", parentStage);
+		Department obj = new Department();
+		createDialogForm(obj, "/gui/DepartmentForm.fxml", parentStage);
 	} 
 	
 	public void setDepartmentService(DepartmentService service) {
@@ -78,18 +79,27 @@ public class DepartmentListController implements Initializable{
 		tableViewDepartment.setItems(obsList);
 	}
 	
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Department obj, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
 			
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Enter Department data");
-			dialogStage.setScene(new Scene(pane));
-			dialogStage.setResizable(false);
-			dialogStage.initOwner(parentStage);
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.showAndWait();
+			DepartmentFormController controller = loader.getController();
+			try {
+				controller.setDepartment(obj);
+				controller.updateFormData();
+				
+				Stage dialogStage = new Stage();
+				dialogStage.setTitle("Enter Department data");
+				dialogStage.setScene(new Scene(pane));
+				dialogStage.setResizable(false);
+				dialogStage.initOwner(parentStage);
+				dialogStage.initModality(Modality.WINDOW_MODAL);
+				dialogStage.showAndWait();
+			} catch(NullPointerException e) {
+				Alerts.showAlert("Error loading obj", null, e.getMessage(), AlertType.ERROR);
+			}
+			
 		} catch(IOException e) {
 			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
